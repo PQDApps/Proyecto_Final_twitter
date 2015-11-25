@@ -1,1 +1,1 @@
-console.log(params);
+var socket = io();

@@ -14,12 +14,13 @@ var client = new Twitter({
 var params = {screen_name: 'PedroQuiD'};
 client.get('statuses/user_timeline', params, function(error, tweets, response){
   if (!error) {
-    console.log(tweets);
+    //console.log(tweets);
   }
 });
 
 app.use(express.static(__dirname));
 app.use('/bs', express.static(__dirname + '/node_modules/bootstrap/'));
+app.use('/tw', express.static(__dirname + '/node_modules/twitter/lib'));
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
@@ -28,7 +29,15 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   // Socket connection successful
   console.log('a user connected '+ socket.id);
+
+  // Socket disconnection execute following function
+  socket.on('disconnect', onSocketDisconnect);
 });
+
+// Socket disconnected
+function onSocketDisconnect () {
+  console.log('Disconnected from socket server')
+}
 
 
 
