@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Signin Template for Bootstrap</title>
+    <title>Get Tweets</title>
 
     <!-- Bootstrap core CSS -->
     <link href="bs/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,7 +17,6 @@
 
     <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet">
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
   </head>
 
@@ -42,25 +41,17 @@
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
-
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
     <div class="container">
         <div>
-            <form class="form-signin" action="/proyecto.html" onsubmit="return login();">
-                <h2 class="form-signin-heading">Please sign in</h2>
-                <label for="inputEmail" class="sr-only">Email address</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputPassword" class="sr-only">Password</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <div class="checkbox">
-                  <label class="form-remember">
-                    <input type="checkbox" value="remember-me"> Remember me
-                  </label>
-                </div>
-                <button class="btn-wisteria" type="submit">Sign in</button>
+            <form class="form-signin" action="/proyecto.html" onsubmit="return testing(document.getElementByName('twitterHandle').value);">
+                <h2 class="form-signin-heading">Search by User</h2>
+                <label for="inputEmail" class="sr-only">Twitter User name</label>
+                <input type="text" name="twitterHandle" id="tweetUser" class="form-control" placeholder="Twitter User Name" required autofocus>
+                <button class="btn-wisteria" type="submit">Get Tweets</button>
             </form>
         </div>
 
@@ -77,9 +68,5 @@
 
 
     </div> <!-- /container -->
-
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>
