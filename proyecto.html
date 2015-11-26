@@ -47,25 +47,51 @@
 
     <div class="container">
         <div>
-            <form class="form-signin" action="/proyecto.html" onsubmit="return testing(document.getElementByName('twitterHandle').value);">
-                <h2 class="form-signin-heading">Search by User</h2>
+            <form id="twit" class="form-function" action="/proyecto.html">
+                <h2 class="form-function-heading">Search by User</h2>
                 <label for="inputEmail" class="sr-only">Twitter User name</label>
-                <input type="text" name="twitterHandle" id="tweetUser" class="form-control" placeholder="Twitter User Name" required autofocus>
+                <input type="text" id="twitterHandle" class="form-control" placeholder="Twitter User Name" required autofocus>
                 <button class="btn-wisteria" type="submit">Get Tweets</button>
             </form>
         </div>
 
-        <div>
-        <button class="btn-wisteria" type="submit">Get Tweets</button>
-        </div>
 
         <div>
+            <form id ="locacion" class="form-function" action="/proyecto.html">
+                <h2 class="form-function-heading">Search For Nearby Users</h2>
+                <label for="inputEmail" class="sr-only">Location</label>
+                <input type="text" id="location" class="form-control" placeholder="Location" required autofocus>
+                <button class="btn-wisteria" type="submit">Search Nearby</button>
+            </form>
         </div>
 
-        <div>
-        <button class="btn-wisteria" type="submit">Search</button>
-        </div>
+        <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script>
+            var socket = io();
+            //Emit the user name to get the tweets
+            $('#twit').submit(function(){
+                socket.emit('getTweets', $('#twitterHandle').val());
+                //$('#twitterHandle').val('');
+                return false;
+            });
+            //Receive the users tweets
+            socket.on('getTweets', function(tweets){
+                console.log(tweets);
+                //$('#messages').append($('<li>').text(msg));
+            });
 
+            //Emit the search by user
+            $('#locacion').submit(function(){
+                socket.emit('nearby', $('#location').val());
+                //$('#location').val('');
+                return false;
+            });
+            //Receive the users
+            socket.on('nearby', function(nearUsers){
+                console.log(nearUsers);
+            });
+        </script>
 
     </div> <!-- /container -->
   </body>
