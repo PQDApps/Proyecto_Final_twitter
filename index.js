@@ -8,7 +8,10 @@ var client = new Twitter({
 	consumer_key: 'Ii1asTjazXQE1H07FAivozQbX',
 	consumer_secret: 'VnXhnkWZ5MyeZMRObnwNIsTVUrTC34JdO2OXxwEfJmA2kLvCtF',
 	access_token_key: '844543537-cuYgkC5HWDlMFPbtSGbiBpbVGvi9bvIKXD4MLXCa',
-	access_token_secret: 'WrtNoS8caf8CBFgljQVj9ulYm2XqchydX05s2oD9q0IfD'
+	access_token_secret: 'WrtNoS8caf8CBFgljQVj9ulYm2XqchydX05s2oD9q0IfD',
+  request_options: {
+    proxy: 'http://proxy.autozone.com'
+  }
 });
 
 app.use(express.static(__dirname));
@@ -41,10 +44,12 @@ function onSocketDisconnect () {
 // Function to get the tweets from the user
 function onGetTweets(username) {
   var params = {screen_name: username};
+
   client.get('statuses/user_timeline', params, function(error, tweets, response){
     if (!error) {
+      console.log("HERE" + username);
       io.emit('getTweets', tweets);
-      //console.log(tweets);
+      console.log(tweets);
     }
   });
 }
@@ -55,8 +60,8 @@ function onGetNearby(location) {
     var params = {query : location};
     client.get('geo/search', params, function(error, nearUsers, response){
       if (!error) {
+        console.log(nearUsers);
         io.emit('nearby', nearUsers);
-        //console.log(tweets);
       }
     });
     //accuracy=0&query=Toronto&granularity=neighborhood&autocomplete=false&trim_place=false
