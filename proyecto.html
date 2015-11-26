@@ -17,12 +17,16 @@
 
     <!-- Custom styles for this template -->
     <link href="signin.css" rel="stylesheet">
-
+    <style>
+        #messages li{ color: #fff; }
+        #tweets li{ color: #fff; }
+    </style>
   </head>
 
   <body>
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="proyecto.js"></script>
+    <script src="prettyprint.js"></script>
 
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -47,6 +51,7 @@
 
     <div class="container">
         <div>
+            <ul id="messages"></ul>
             <form id="twit" class="form-function" action="/proyecto.html">
                 <h2 class="form-function-heading">Search by User</h2>
                 <label for="inputEmail" class="sr-only">Twitter User name</label>
@@ -55,7 +60,7 @@
             </form>
         </div>
 
-
+        <ul id="tweets"></ul>
         <div>
             <form id ="locacion" class="form-function" action="/proyecto.html">
                 <h2 class="form-function-heading">Search For Nearby Users</h2>
@@ -64,6 +69,7 @@
                 <button class="btn-wisteria" type="submit">Search Nearby</button>
             </form>
         </div>
+
 
         <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
         <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
@@ -77,6 +83,9 @@
             });
             //Receive the users tweets
             socket.on('getTweets', function(tweets){
+                var str = JSON.stringify(tweets, null, 4)
+                var jsonPretty = prettyPrint( tweets );
+                $('#messages').append($(jsonPretty));
                 console.log(tweets);
                 //$('#messages').append($('<li>').text(msg));
             });
@@ -89,7 +98,9 @@
             });
             //Receive the users
             socket.on('nearby', function(nearUsers){
-                console.log(nearUsers);
+                var jsonPretty = prettyPrint( nearUsers );
+                $('#tweets').append($(jsonPretty));
+                //console.log(nearUsers);
             });
         </script>
 
